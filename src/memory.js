@@ -26,10 +26,10 @@ class MemoryGame {
         return false; 
       }
     }
-  }
-
 
   checkIfFinished() {
     // ... write your code here
-  }
+return this.pairsGuessed === this.cards.length / 2
+  
+}
 }

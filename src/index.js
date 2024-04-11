@@ -39,6 +39,14 @@ window.addEventListener('load', (event) => {
   });
 
   // Add all the divs to the HTML
+
+  html += `
+  <div class="card" data-card-name="ironman">
+    <div class="back" name="ironman.jpg" style="background-color: blue;"></div>
+    <div class="front" style="background: url(img/ironman.jpg) no-repeat"></div>
+  </div>
+`;
+  
   document.querySelector('#memory-board').innerHTML = html;
 
   // Bind the click event of each element to a function
