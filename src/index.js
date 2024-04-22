@@ -42,6 +42,14 @@ const onload = (event) => {
     `;
   });
   // Add all the divs to the HTML
+  /** 
+   * Understand the game - done
+   * Flip a card
+   * ---Add clickevent listener on card - done
+   * ---Add the classname turned to the class card in the card
+   *  
+      
+   **/
   
   document.querySelector('#memory-board').innerHTML = html;
 
@@ -49,9 +57,7 @@ const onload = (event) => {
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
       // TODO: write some code here
-      
-
-      console.log(`Card clicked: ${card}`);
+      card.classList.add("turned");
       
     });
   });
