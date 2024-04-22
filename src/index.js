@@ -28,8 +28,7 @@ const cards = [
 
 const memoryGame = new MemoryGame(cards);
 
-
-window.addEventListener('load', (event) => {
+const onload = (event) => {
   let html = '';
 
   memoryGame.shuffleCards();
@@ -42,8 +41,6 @@ window.addEventListener('load', (event) => {
       </div>
     `;
   });
-
-
   // Add all the divs to the HTML
   
   document.querySelector('#memory-board').innerHTML = html;
@@ -52,9 +49,15 @@ window.addEventListener('load', (event) => {
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
       // TODO: write some code here
+      
 
       console.log(`Card clicked: ${card}`);
       
     });
   });
-});
+  
+};
+
+window.addEventListener('load',onload);
+
+
