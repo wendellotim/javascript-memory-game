@@ -46,19 +46,31 @@ const onload = (event) => {
    * Understand the game - done
    * Flip a card
    * ---Add clickevent listener on card - done
-   * ---Add the classname turned to the class card in the card
+   * ---Add the classname turned to the class card in the car - done
+   * Flip only two cards
+   * Compare the two cards
+   * ---If card1 and card2 are not the same flip the cards
+   * ---if Card1 and card2 are the same keep them open
    *  
       
    **/
   
   document.querySelector('#memory-board').innerHTML = html;
+ 
+  let cardsFlipped = 0;
+
+  const cardLimit = 2;
 
   // Bind the click event of each element to a function
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
       // TODO: write some code here
+
+      if(cardsFlipped < cardLimit ){
       card.classList.add("turned");
-      
+      cardsFlipped++
+
+      }     
     });
   });
   
