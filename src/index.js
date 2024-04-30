@@ -47,7 +47,7 @@ const onload = (event) => {
    * Flip a card
    * ---Add clickevent listener on card - done
    * ---Add the classname turned to the class card in the car - done
-   * Flip only two cards
+   * Flip only two cards -- done
    * Compare the two cards
    * ---If card1 and card2 are not the same flip the cards
    * ---if Card1 and card2 are the same keep them open
@@ -58,24 +58,36 @@ const onload = (event) => {
   document.querySelector('#memory-board').innerHTML = html;
  
   let cardsFlipped = 0;
-
   const cardLimit = 2;
+  let firstFlippedCard;
+  let secondFlippedCard;
 
   // Bind the click event of each element to a function
   document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', () => {
-      // TODO: write some code here
+      if (cardsFlipped < cardLimit) {
+        card.classList.add('turned');
+        cardsFlipped++;
 
-      if(cardsFlipped < cardLimit ){
-      card.classList.add("turned");
-      cardsFlipped++
+        if (cardsFlipped === 1) {
+          firstFlippedCard = card;
+        } else if (cardsFlipped === 2) {
+          secondFlippedCard = card;
 
-      }     
+          if (firstFlippedCard.dataset.cardName === secondFlippedCard.dataset.cardName) {
+            firstFlippedCard.parentNode.removeChild(firstFlippedCard);
+            secondFlippedCard.parentNode.removeChild(secondFlippedCard);
+          } else {
+            setTimeout(() => {
+              firstFlippedCard.classList.remove('turned');
+              secondFlippedCard.classList.remove('turned');
+            }, 1000); 
+          }
+          cardsFlipped = 0; 
+        }
+      }
     });
   });
-  
 };
 
-window.addEventListener('load',onload);
-
-
+window.addEventListener('load', onload);
