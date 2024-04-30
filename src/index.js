@@ -48,9 +48,9 @@ const onload = (event) => {
    * ---Add clickevent listener on card - done
    * ---Add the classname turned to the class card in the car - done
    * Flip only two cards -- done
-   * Compare the two cards
-   * ---If card1 and card2 are not the same flip the cards
-   * ---if Card1 and card2 are the same keep them open
+   * Compare the two cards -- done
+   * ---If card1 and card2 are not the same flip the cards -- done
+   * ---if Card1 and card2 are the same keep them open -- done
    *  
       
    **/
@@ -75,8 +75,11 @@ const onload = (event) => {
           secondFlippedCard = card;
 
           if (firstFlippedCard.dataset.cardName === secondFlippedCard.dataset.cardName) {
-            firstFlippedCard.parentNode.removeChild(firstFlippedCard);
-            secondFlippedCard.parentNode.removeChild(secondFlippedCard);
+            setTimeout(() => {
+              firstFlippedCard.parentNode.removeChild(firstFlippedCard);
+              secondFlippedCard.parentNode.removeChild(secondFlippedCard);
+            }, 1000)
+             
           } else {
             setTimeout(() => {
               firstFlippedCard.classList.remove('turned');
