@@ -31,10 +31,9 @@ const memoryGame = new MemoryGame(cards);
 const onload = (event) => {
   let html = "";
 
-  document.getElementById("shuffle").addEventListener("click", () => {
-    memoryGame.shuffleCards();
-    console.log("clicked")
-  });
+ 
+memoryGame.shuffleCards();
+  
   memoryGame.cards.forEach((pic) => {
     html += `
       <div class="card" data-card-name="${pic.name}">
@@ -59,38 +58,40 @@ const onload = (event) => {
 
   document.querySelector("#memory-board").innerHTML = html;
 
+  let firstFlippedCard = null;
+  let secondFlippedCard = null;
   let cardsFlipped = 0;
-  const cardLimit = 2;
-  let firstFlippedCard;
-  let secondFlippedCard;
 
-  // Bind the click event of each element to a function
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", () => {
-      if (cardsFlipped < cardLimit) {
         card.classList.add("turned");
         cardsFlipped++;
 
-        if (cardsFlipped === 1) {
-          firstFlippedCard = card;
-        } else if (cardsFlipped === 2) {
-          secondFlippedCard = card;
+      if (cardsFlipped === 1) {
+        firstFlippedCard = card;
+      } else if (cardsFlipped === 2) {
+        secondFlippedCard = card;
 
-          if (
-            firstFlippedCard.dataset.cardName ===
-            secondFlippedCard.dataset.cardName
-          ) {
-            setTimeout(() => {
-              firstFlippedCard.parentNode.removeChild(firstFlippedCard);
-              secondFlippedCard.parentNode.removeChild(secondFlippedCard);
-            }, 1000);
-          } else {
-            setTimeout(() => {
-              firstFlippedCard.classList.remove("turned");
-              secondFlippedCard.classList.remove("turned");
-            }, 1000);
-          }
-          cardsFlipped = 0;
+        const cardName1 = firstFlippedCard.dataset.cardName;
+        const cardName2 = secondFlippedCard.dataset.cardName;
+
+        const isPair = memoryGame.checkIfPair(cardName1, cardName2);
+
+        if (isPair) {
+          setTimeout(() => {
+            firstFlippedCard.parentNode.removeChild(firstFlippedCard);
+            secondFlippedCard.parentNode.removeChild(secondFlippedCard);
+          }, 1000);
+
+        } else {
+          setTimeout(() => {
+            firstFlippedCard.classList.remove("turned");
+            secondFlippedCard.classList.remove("turned");
+          }, 1000);
+        }
+        cardsFlipped = 0;
+        if (memoryGame.checkIfFinished()) {
+          alert("Congratulations! You found all the pairs.");
         }
       }
     });
