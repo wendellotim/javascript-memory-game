@@ -31,9 +31,8 @@ const memoryGame = new MemoryGame(cards);
 const onload = (event) => {
   let html = "";
 
- 
-memoryGame.shuffleCards();
-  
+  memoryGame.shuffleCards();
+
   memoryGame.cards.forEach((pic) => {
     html += `
       <div class="card" data-card-name="${pic.name}">
@@ -58,14 +57,14 @@ memoryGame.shuffleCards();
 
   document.querySelector("#memory-board").innerHTML = html;
 
-  let firstFlippedCard = null;
-  let secondFlippedCard = null;
+  let firstFlippedCard;
+  let secondFlippedCard;
   let cardsFlipped = 0;
 
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", () => {
-        card.classList.add("turned");
-        cardsFlipped++;
+      card.classList.add("turned");
+      cardsFlipped++;
 
       if (cardsFlipped === 1) {
         firstFlippedCard = card;
@@ -82,7 +81,6 @@ memoryGame.shuffleCards();
             firstFlippedCard.parentNode.removeChild(firstFlippedCard);
             secondFlippedCard.parentNode.removeChild(secondFlippedCard);
           }, 1000);
-
         } else {
           setTimeout(() => {
             firstFlippedCard.classList.remove("turned");
