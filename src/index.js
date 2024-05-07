@@ -31,7 +31,11 @@ const memoryGame = new MemoryGame(cards);
 const onload = (event) => {
   let html = "";
 
-  memoryGame.shuffleCards();
+  document.getElementById("shuffle").addEventListener("click", () => {
+    memoryGame.shuffleCards();
+    console.log("clicked alert")
+  });
+  //memoryGame.shuffleCards();
 
   memoryGame.cards.forEach((pic) => {
     html += `
