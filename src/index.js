@@ -29,76 +29,31 @@ const cards = [
 
 const memoryGame = new MemoryGame(cards);
 
-const onload = (event) => {
-  let html = "";
+let firstFlippedCard;
+let secondFlippedCard;
+let cardsFlipped = 0;
 
-  //memoryGame.shuffleCards();
+function updateElements() {
+  let html = "";
 
   memoryGame.cards.forEach((pic) => {
     html += `
-      <div class="card" data-card-name="${pic.name}">
-        <div class="back" name="${pic.img}"></div>
-        <div class="front" style="background: url(img/${pic.img}) no-repeat"></div>
-      </div>
-    `;
+            <div class="card" data-card-name="${pic.name}">
+                <div class="back" name="${pic.img}"></div>
+                <div class="front" style="background: url(img/${pic.img}) no-repeat"></div>
+            </div>
+        `;
   });
 
   document.querySelector("#memory-board").innerHTML = html;
 
-  let firstFlippedCard;
-  let secondFlippedCard;
-  let cardsFlipped = 0;
+  checkCards();
+}
 
+function checkCards() {
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", () => {
-      card.classList.add("turned");
-      cardsFlipped++;
-
-      if (cardsFlipped === 1) {
-        firstFlippedCard = card;
-      } else if (cardsFlipped === 2) {
-        secondFlippedCard = card;
-
-        const cardName1 = firstFlippedCard.dataset.cardName;
-        const cardName2 = secondFlippedCard.dataset.cardName;
-
-        const isPair = memoryGame.checkIfPair(cardName1, cardName2);
-
-        if (isPair) {
-          setTimeout(() => {
-            firstFlippedCard.parentNode.removeChild(firstFlippedCard);
-            secondFlippedCard.parentNode.removeChild(secondFlippedCard);
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            firstFlippedCard.classList.remove("turned");
-            secondFlippedCard.classList.remove("turned");
-          }, 1000);
-        }
-        cardsFlipped = 0;
-
-        if (memoryGame.checkIfFinished()) {
-          alert("Congratulations! You found all the pairs.");
-        }
-      }
-    });
-  });
-
-  document.getElementById("shuffle").addEventListener("click", () => {
-    memoryGame.shuffleCards();
-
-    html = "";
-    memoryGame.cards.forEach((pic) => {
-      html += `
-        <div class="card" data-card-name="${pic.name}">
-          <div class="back" name="${pic.img}"></div>
-          <div class="front" style="background: url(img/${pic.img}) no-repeat"></div>
-        </div>
-      `;
-    });
-    document.querySelector("#memory-board").innerHTML = html;
-    document.querySelectorAll(".card").forEach((card) => {
-      card.addEventListener("click", () => {
+      if (!card.classList.contains("turned")) {
         card.classList.add("turned");
         cardsFlipped++;
 
@@ -129,8 +84,18 @@ const onload = (event) => {
             alert("Congratulations! You found all the pairs.");
           }
         }
-      });
+      }
     });
+  });
+}
+
+const onload = (event) => {
+  updateElements();
+
+  document.getElementById("shuffle").addEventListener("click", () => {
+    memoryGame.shuffleCards();
+
+    updateElements();
   });
 };
 
