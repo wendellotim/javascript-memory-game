@@ -43,9 +43,13 @@ function updateElements() {
         `;
   });
 
-  document.querySelector("#memory-board").innerHTML = html;
+  const memoryBoardElement = document.querySelector("#memory-board");
 
-  checkCards();
+  if (memoryBoardElement !== null) {
+    memoryBoardElement.innerHTML = html;
+
+    checkCards();
+  }
 }
 
 function checkCards() {
