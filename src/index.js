@@ -29,9 +29,7 @@ const cards = [
 
 const memoryGame = new MemoryGame(cards);
 
-let firstFlippedCard;
-let secondFlippedCard;
-let cardsFlipped = 0;
+let flippedCard = [null, null, 0];
 
 function updateElements() {
   let html = "";
@@ -55,30 +53,30 @@ function checkCards() {
     card.addEventListener("click", () => {
       if (!card.classList.contains("turned")) {
         card.classList.add("turned");
-        cardsFlipped++;
+        flippedCard[2]++;
 
-        if (cardsFlipped === 1) {
-          firstFlippedCard = card;
-        } else if (cardsFlipped === 2) {
-          secondFlippedCard = card;
+        if (flippedCard[2] === 1) {
+          flippedCard[0] = card;
+        } else if (flippedCard[2] === 2) {
+          flippedCard[1] = card;
 
-          const cardName1 = firstFlippedCard.dataset.cardName;
-          const cardName2 = secondFlippedCard.dataset.cardName;
+          const cardName1 = flippedCard[0].dataset.cardName;
+          const cardName2 = flippedCard[1].dataset.cardName;
 
           const isPair = memoryGame.checkIfPair(cardName1, cardName2);
 
           if (isPair) {
             setTimeout(() => {
-              firstFlippedCard.parentNode.removeChild(firstFlippedCard);
-              secondFlippedCard.parentNode.removeChild(secondFlippedCard);
+              flippedCard[0].parentNode.removeChild(flippedCard[0]);
+              flippedCard[1].parentNode.removeChild(flippedCard[1]);
             }, 1000);
           } else {
             setTimeout(() => {
-              firstFlippedCard.classList.remove("turned");
-              secondFlippedCard.classList.remove("turned");
+              flippedCard[0].classList.remove("turned");
+              flippedCard[1].classList.remove("turned");
             }, 1000);
           }
-          cardsFlipped = 0;
+          flippedCard[2] = 0;
 
           if (memoryGame.checkIfFinished()) {
             alert("Congratulations! You found all the pairs.");
